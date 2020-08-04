@@ -4,6 +4,20 @@ on:
     branches:
       - master
 jobs:
+  review:
+    name: Diff review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: eslint
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} 
+          level: error
+          reporter: github-pr-review
+          filter_mode: diff_context
+          fail_on_error: true
+          eslint_flags: ". --ext .ts" 
   analysis:
     name: Files check
     runs-on: ubuntu-latest
@@ -12,6 +26,7 @@ jobs:
       - name: eslint
         uses: reviewdog/action-eslint@v1
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} 
           level: error
           reporter: github-pr-check
           filter_mode: file
