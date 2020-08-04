@@ -13,7 +13,7 @@ presence.on("UpdateData", async () => {
   if (document.location.hostname == "www.4gamers.com.tw") {
     if (document.location.pathname == "/") {
       presenceData.startTimestamp = browsingStamp;
-      presenceData.details = "Viewing home page";
+      presenceData.details = "Viewing home page!";
     } else if (document.location.pathname.includes("/new")) {
       title = document.getElementsByClassName("news-header-title")[0].innerHTML;
       var category = document.getElementsByClassName("news-header-category ")[0]
