@@ -1,4 +1,4 @@
-name: Code Analysis
+name: CA
 on: 
   schedule:
     - cron: '*/5 * * * *'
@@ -8,8 +8,29 @@ on:
       - synchronize
       - closed
 jobs:
-  basicallyeslint:
+  review:
+    name: Code Analysis
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: bradennapier/eslint-plus-action@v3.4.0
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - name: Set-up Yarn cache
+      uses: actions/cache@v2
+      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Run ESLint
+      uses: bradennapier/eslint-plus-action@v3.4.0
+      with:
+        issueSummaryType: full
+        reportIgnoredFiles: true 
+        reportWarningsAsErrors: true 
+        #issueSummaryOnlyOnEvent: true
