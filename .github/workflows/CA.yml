@@ -30,7 +30,6 @@ jobs:
     - name: Run ESLint
       uses: bradennapier/eslint-plus-action@v3.4.0
       with:
-        issueSummaryType: full
-        reportIgnoredFiles: true 
-        reportWarningsAsErrors: true 
-        #issueSummaryOnlyOnEvent: true
+        issueSummaryType: "full"
+        reportIgnoredFiles: true
+        reportWarningsAsErrors: true
