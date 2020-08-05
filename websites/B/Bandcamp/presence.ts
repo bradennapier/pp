@@ -30,7 +30,7 @@ presence.on("UpdateData", async () => {
     if (
       document.querySelector(
         "#discover > div:nth-child(9) > div:nth-child(2) > div > div.detail-player > div > table > tbody > tr:nth-child(1) > td.play_cell > a > div"
-      ).className == "playbutton playing"
+      ).className == "playbutton playing!"
     ) {
       min = parseInt(
         document
